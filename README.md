@@ -135,6 +135,63 @@ npm run dev
 
 ---
 
+## One-Pager: Scaling Strategies & API Management
+
+This project is designed to be scalable and cloud-ready. Here's how you can scale the application and manage APIs across different levels of complexity:
+
+### 1. Basic Scaling Approaches
+
+#### a. **Serverless APIs with AWS Lambda**
+- **How:** Package your FastAPI endpoints as serverless functions using AWS Lambda (with AWS API Gateway as the HTTP interface).
+- **Benefits:**
+  - Automatic scaling to thousands of concurrent requests.
+  - No server management; pay only for usage.
+  - Built-in high availability and global reach.
+- **API Management:**
+  - Use AWS API Gateway for routing, authentication, throttling, and monitoring.
+  - Deploy each endpoint as a Lambda function or use frameworks like AWS Chalice or Zappa for FastAPI.
+- **When to use:**
+  - For event-driven workloads, unpredictable traffic, or when you want to minimize infrastructure management.
+
+#### b. **Application Load Balancer (ALB) with EC2**
+- **How:** Deploy multiple EC2 instances running your backend (Dockerized or not), and place an AWS Application Load Balancer in front.
+- **Benefits:**
+  - Distributes incoming traffic across healthy backend instances.
+  - Supports auto-scaling groups for dynamic scaling based on load.
+  - Integrates with AWS Certificate Manager for SSL.
+- **API Management:**
+  - ALB handles routing and health checks.
+  - Use AWS WAF for security, and Route 53 for DNS-based global load balancing.
+- **When to use:**
+  - For traditional VM-based deployments, when you need more control over the environment, or for legacy compatibility.
+
+### 2. Advanced Scaling: Kubernetes (K8s)
+- **How:** Deploy your services as containers in a Kubernetes cluster (EKS on AWS, GKE on GCP, AKS on Azure, or on-premises).
+- **Benefits:**
+  - Automated scaling, self-healing, and rolling updates.
+  - Service discovery and internal load balancing.
+  - Supports blue/green and canary deployments.
+  - Easily manage secrets, config, and persistent storage.
+- **API Management:**
+  - Use Kubernetes Ingress controllers (e.g., NGINX Ingress, AWS ALB Ingress) for routing and SSL.
+  - Integrate with API gateways (Kong, Ambassador, AWS API Gateway) for advanced API management (rate limiting, authentication, monitoring).
+- **When to use:**
+  - For large-scale, microservices-based architectures, or when you need maximum flexibility and automation.
+
+### 3. API Management Best Practices
+- **Documentation:** Always provide OpenAPI docs (as this project does at `/docs`).
+- **Authentication & Authorization:** Use JWT, OAuth2, or API keys. Integrate with API Gateway or Ingress for enforcement.
+- **Rate Limiting & Throttling:** Protect your backend from abuse using API Gateway, NGINX, or Ingress policies.
+- **Monitoring & Logging:** Use centralized logging (ELK, Loki) and monitoring (Prometheus, Grafana, AWS CloudWatch).
+- **Versioning:** Version your APIs (e.g., `/api/v1/jobs`) to support backward compatibility.
+
+### 4. Choosing the Right Approach
+- **Start simple:** For small projects or MVPs, Docker Compose with NGINX is sufficient.
+- **Scale up:** As traffic grows, move to ALB+EC2 or serverless Lambdas.
+- **Go advanced:** For global, high-availability, and microservices, use Kubernetes with an API gateway.
+
+---
+
 ## Environment Variables
 
 All sensitive configuration (database URL, secrets, etc.) is managed via the `.env` file and injected into containers by Docker Compose.
