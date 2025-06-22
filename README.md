@@ -11,7 +11,7 @@ A scalable, production-ready job scheduler microservice built with FastAPI, SQLA
 - REST API for job CRUD operations
 - Persistent storage with PostgreSQL
 - Modular, maintainable backend codebase
-- Documentation at `/docs`
+- API docs at `/docs`
 - NGINX reverse proxy and load balancer
 - React frontend for job management
 
@@ -165,6 +165,3 @@ All sensitive configuration (database URL, secrets, etc.) is managed via the `.e
 
 ---
 
-## License
-
-MIT 
